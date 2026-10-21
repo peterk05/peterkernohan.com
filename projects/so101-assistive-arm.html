@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Low-Cost Assistive Robotic Arms (SO-101) — Peter Kernohan</title>
+  <meta name="description" content="A dual SO-101 robotic arm system trained with LeRobot imitation learning to pour drinks and pick and place tools, shaped by feedback from Naas Men’s Shed.">
+  <link rel="stylesheet" href="../portfolio-case-study.css">
+<link rel="canonical" href="https://www.peterkernohan.com/projects/so101-assistive-arm.html">
+<meta property="og:title" content="Low-Cost Assistive Robotic Arms (SO-101) — Peter Kernohan">
+<meta property="og:description" content="A dual SO-101 robotic arm system trained with LeRobot imitation learning to pour drinks and pick and place tools, shaped by feedback from Naas Men’s Shed.">
+<meta property="og:url" content="https://www.peterkernohan.com/projects/so101-assistive-arm.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Peter Kernohan">
+<meta property="og:image" content="https://www.peterkernohan.com/assets/images/so101-assistive-arm/web/training-platform-layout.webp">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav aria-label="Main navigation">
+    <a class="nav-logo" href="../index.html">
+      <span class="nav-logo-name">Peter Kernohan</span>
+      <span class="nav-logo-sub">Robotics &amp; Electronics Engineering</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main id="main" class="case-page" tabindex="-1">
+    <a class="back-link" href="../index.html#projects">← Back to project timeline</a>
+    <p class="project-category" style="margin-top:32px">Robot Learning · Assistive Technology</p>
+    <h1>Low-Cost Assistive Robotic Arms (SO-101)</h1>
+    <p class="case-summary">A two-arm robot built from open-source SO-101 arms that learns everyday tasks from demonstration instead of being programmed for each one. The same SO-101 and LeRobot platform underpins my build for the IEEE Global Robotics Championship.</p>
+
+    <figure class="case-hero-media">
+      <img src="../assets/images/so101-assistive-arm/web/training-platform-layout.webp" alt="Two black SO-101 robotic arms mounted at either end of a wooden training board" width="1600" height="1200">
+      <figcaption>Layout of the training board, with the two SO-101 follower arms mounted at either end.</figcaption>
+    </figure>
+
+    <div class="case-meta">
+      <span>Three-person team</span>
+      <span>October – December 2026 · In progress</span>
+      <span>Maynooth University · EE397</span>
+    </div>
+    <div class="case-meta">
+      <span>4 SO-101 arms (2 leader, 2 follower)</span>
+      <span>LeRobot imitation learning</span>
+      <span>Community-led design</span>
+    </div>
+
+    <div class="case-nav" aria-label="On this page">
+      <a href="#overview">Overview</a>
+      <a href="#community">Community input</a>
+      <a href="#process">Development process</a>
+      <a href="#competition">Competition build</a>
+      <a href="#photos">Photos</a>
+      <a href="#tools">Technologies</a>
+    </div>
+
+    <section id="overview">
+      <h2>Why low-cost assistive arms</h2>
+      <p>People with limited hand or arm function often rely on carers for small, repeated tasks such as pouring a drink or putting things away. Assistive robot arms that can do this already exist, but they typically cost tens of thousands of euros and need an engineer to program every new task.</p>
+      <p>Our approach is to pair affordable, open-source SO-101 arms with Hugging Face’s LeRobot software, so a new task can be taught by demonstrating it with a leader arm rather than writing code for every movement. Training and inference run on our own laptops, keeping the system cheap to build and easy for others to replicate.</p>
+    </section>
+
+    <section id="community">
+      <h2>Designed with the community</h2>
+      <p>We contacted nursing homes and Men’s Sheds Ireland, then visited Naas Men’s Shed to see how members work day to day and ask which jobs they find difficult. We showed photos and videos of the arms sorting objects, pouring and picking and placing, and toured the workshop, polytunnels and common rooms.</p>
+      <p>Two tasks came directly out of that visit:</p>
+      <ul>
+        <li><strong>Pouring a drink.</strong> Tea is part of every project at the shed, and a mug was dropped and broken while we were there. Pouring hot liquid is hard and risky for anyone with a tremor or arthritis, so one arm holds the cup while the other pours.</li>
+        <li><strong>Tool pick-and-place.</strong> Members suggested a robot that returns tools, such as a chisel, to the right spot in their holder. The same skill carries over to sorting, packing and tidying.</li>
+      </ul>
+      <p>Shed members have been invited to Maynooth to try the arms in person, and we plan to return to the shed with the next version to gather hands-on feedback.</p>
+    </section>
+
+    <section id="process">
+      <h2>Development process</h2>
+      <article class="process-step"><span class="step-number" aria-hidden="true">01</span><div><h3>Training platform</h3><p>We designed and built a wooden training board with the follower arms bolted down, so the setup stays rigid and repeatable between data-collection sessions and there is no re-calibration every time the arms are moved.</p></div></article>
+      <article class="process-step"><span class="step-number" aria-hidden="true">02</span><div><h3>Teleoperation and gripper testing</h3><p>With the platform built, we teleoperated the follower arms from the leader arms to check range of movement and gripper strength, including picking up round objects with PLA+ printed grippers.</p></div></article>
+      <article class="process-step"><span class="step-number" aria-hidden="true">03</span><div><h3>Imitation learning</h3><p>The first model is trained in LeRobot from human demonstrations recorded on the leader arms, with simulation data as a second source. Published work on low-cost bimanual arms using Action Chunking with Transformers (ACT), and compact vision-language-action models such as SmolVLA tested on SO-101 tasks, guides our choice of policies.</p></div></article>
+      <article class="process-step"><span class="step-number" aria-hidden="true">04</span><div><h3>Test, gather feedback, retrain</h3><p>Pouring is tested with rice standing in for liquid and compared against human pours by counting spills; pick-and-place is scored on whether each object ends up in the right place. Feedback from the Men’s Shed and our facilitator feeds a second, improved model, which we compare against the first.</p></div></article>
+      <article class="process-step"><span class="step-number" aria-hidden="true">05</span><div><h3>Safety and sustainability</h3><p>A signed risk assessment covers the workshop and moving arms; training uses cold water instead of tea, with electronics kept well clear of liquids. The project is mapped to UN Sustainable Development Goals 11, 12 and 16 through accessible, low-cost, open-source assistive technology.</p></div></article>
+    </section>
+
+    <section id="competition">
+      <h2>Competition build</h2>
+      <p>I’m also using SO-101 arms and LeRobot for the Robot Arm AI Challenge at the IEEE Global Robotics Championship, where I’m representing IEEE UK &amp; Ireland in a two-person team. The gripper and teleoperation tests on this page, including handling dodecahedron and hexagonal-prism pieces, feed directly into that competition build.</p>
+    </section>
+
+    <section id="photos" data-media-slot="photos">
+      <h2>Photos</h2>
+      <div class="case-gallery">
+        <figure><a href="../assets/images/so101-assistive-arm/web/first-training-board.webp"><img src="../assets/images/so101-assistive-arm/web/first-training-board.webp" alt="Peter and a teammate giving a thumbs up beside two SO-101 arms on a wooden board in the workshop" loading="lazy"></a><figcaption>With the first iteration of the training board in the Electronic Engineering workshop.</figcaption></figure>
+        <figure><a href="../assets/images/so101-assistive-arm/web/gripper-test-dodecahedron.webp"><img src="../assets/images/so101-assistive-arm/web/gripper-test-dodecahedron.webp" alt="SO-101 arm gripping a grey cylinder next to a dodecahedron" loading="lazy"></a><figcaption>Testing how well PLA+ printed grippers handle round objects.</figcaption></figure>
+        <figure><a href="../assets/images/so101-assistive-arm/web/teleoperation-test.webp"><img src="../assets/images/so101-assistive-arm/web/teleoperation-test.webp" alt="A team member holding a leader arm while the follower arm reaches over grey test pieces" loading="lazy"></a><figcaption>Teleoperating the SO-101 to test movement and gripper strength on the new platform.</figcaption></figure>
+        <figure><a href="../assets/images/so101-assistive-arm/web/mens-shed-polytunnel-visit.webp"><img src="../assets/images/so101-assistive-arm/web/mens-shed-polytunnel-visit.webp" alt="Two students looking around a polytunnel with grape vines and vegetable beds" loading="lazy"></a><figcaption>Touring the polytunnel during our visit to Naas Men’s Shed.</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="tools">
+      <h2>Technologies &amp; tools</h2>
+      <div class="case-meta"><span>SO-101 Arms</span><span>LeRobot</span><span>Imitation Learning</span><span>ACT</span><span>SmolVLA</span><span>Python</span><span>Teleoperation</span><span>3D Printing (PLA+)</span><span>User-Centred Design</span></div>
+    </section>
+
+    <div class="project-pagination"><a class="back-link" href="mobile-manipulator.html">Autonomous Household Sorting Robot →</a></div>
+  </main>
+
+  <footer>Peter Kernohan · Robotics &amp; Intelligent Devices · <a href="mailto:peterjohnkernohan@gmail.com">Contact</a></footer>
+</body>
+</html>
