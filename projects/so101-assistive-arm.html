@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Low-Cost Assistive Robotic Arms (SO-101) — Peter Kernohan</title>
-  <meta name="description" content="A dual SO-101 robotic arm system trained with LeRobot imitation learning to pour drinks and pick and place tools, shaped by feedback from Naas Men’s Shed.">
+  <meta name="description" content="A dual SO-101 robotic arm system trained with LeRobot imitation learning: a live policy pouring rice, coverage-checked demonstrations for cube sorting, and design input from Naas Men’s Shed.">
   <link rel="stylesheet" href="../portfolio-case-study.css">
 <link rel="canonical" href="https://www.peterkernohan.com/projects/so101-assistive-arm.html">
 <meta property="og:title" content="Low-Cost Assistive Robotic Arms (SO-101) — Peter Kernohan">
-<meta property="og:description" content="A dual SO-101 robotic arm system trained with LeRobot imitation learning to pour drinks and pick and place tools, shaped by feedback from Naas Men’s Shed.">
+<meta property="og:description" content="A dual SO-101 robotic arm system trained with LeRobot imitation learning: a live policy pouring rice, coverage-checked demonstrations for cube sorting, and design input from Naas Men’s Shed.">
 <meta property="og:url" content="https://www.peterkernohan.com/projects/so101-assistive-arm.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Peter Kernohan">
@@ -48,7 +48,8 @@
     <div class="case-meta">
       <span>4 SO-101 arms (2 leader, 2 follower)</span>
       <span>LeRobot imitation learning</span>
-      <span>Community-led design</span>
+      <span>First trained policy pouring live</span>
+      <span>65 sorting demos, coverage-checked</span>
     </div>
 
     <div class="case-nav" aria-label="On this page">
@@ -56,6 +57,7 @@
       <a href="#community">Community input</a>
       <a href="#process">Development process</a>
       <a href="#competition">Competition build</a>
+      <a href="#videos">Videos</a>
       <a href="#photos">Photos</a>
       <a href="#tools">Technologies</a>
     </div>
@@ -81,14 +83,31 @@
       <h2>Development process</h2>
       <article class="process-step"><span class="step-number" aria-hidden="true">01</span><div><h3>Training platform</h3><p>We designed and built a wooden training board with the follower arms bolted down, so the setup stays rigid and repeatable between data-collection sessions and there is no re-calibration every time the arms are moved.</p></div></article>
       <article class="process-step"><span class="step-number" aria-hidden="true">02</span><div><h3>Teleoperation and gripper testing</h3><p>With the platform built, we teleoperated the follower arms from the leader arms to check range of movement and gripper strength, including picking up round objects with PLA+ printed grippers.</p></div></article>
-      <article class="process-step"><span class="step-number" aria-hidden="true">03</span><div><h3>Imitation learning</h3><p>The first model is trained in LeRobot from human demonstrations recorded on the leader arms, with simulation data as a second source. Published work on low-cost bimanual arms using Action Chunking with Transformers (ACT), and compact vision-language-action models such as SmolVLA tested on SO-101 tasks, guides our choice of policies.</p></div></article>
-      <article class="process-step"><span class="step-number" aria-hidden="true">04</span><div><h3>Test, gather feedback, retrain</h3><p>Pouring is tested with rice standing in for liquid and compared against human pours by counting spills; pick-and-place is scored on whether each object ends up in the right place. Feedback from the Men’s Shed and our facilitator feeds a second, improved model, which we compare against the first.</p></div></article>
-      <article class="process-step"><span class="step-number" aria-hidden="true">05</span><div><h3>Safety and sustainability</h3><p>A signed risk assessment covers the workshop and moving arms; training uses cold water instead of tea, with electronics kept well clear of liquids. The project is mapped to UN Sustainable Development Goals 11, 12 and 16 through accessible, low-cost, open-source assistive technology.</p></div></article>
+      <article class="process-step"><span class="step-number" aria-hidden="true">03</span><div><h3>Imitation learning</h3><p>The first model is trained in LeRobot from human demonstrations recorded on the leader arms, with simulation data as a second source. Published work on low-cost bimanual arms using Action Chunking with Transformers (ACT), and compact vision-language-action models such as SmolVLA tested on SO-101 tasks, guides our choice of policies. Our first trained policy now pours rice from a cup into a bowl, running live on the arms.</p></div></article>
+      <article class="process-step"><span class="step-number" aria-hidden="true">04</span><div><h3>Checking what the data covers</h3><p>For the next task, sorting coloured cubes into matching bins, I wrote analysis scripts that read every recorded episode and map where blocks were placed and where each arm grabbed and let go. Heatmaps from the top camera and a grid scoring how often each spot held a block showed clear gaps: whole areas of the table no demonstration had ever used, and empty patches inside each arm’s reach. We used those maps to decide where to put blocks in the next recording sessions, growing the dataset from 43 to 65 demonstrations so the policy sees the whole workspace rather than a few familiar positions.</p></div></article>
+      <article class="process-step"><span class="step-number" aria-hidden="true">05</span><div><h3>Test, gather feedback, retrain</h3><p>Pouring is tested with rice standing in for liquid and compared against human pours by counting spills; pick-and-place is scored on whether each object ends up in the right place. Feedback from the Men’s Shed and our facilitator feeds a second, improved model, which we compare against the first.</p></div></article>
+      <article class="process-step"><span class="step-number" aria-hidden="true">06</span><div><h3>Safety and sustainability</h3><p>A signed risk assessment covers the workshop and moving arms; training uses cold water instead of tea, with electronics kept well clear of liquids. The project is mapped to UN Sustainable Development Goals 11, 12 and 16 through accessible, low-cost, open-source assistive technology.</p></div></article>
     </section>
 
     <section id="competition">
       <h2>Competition build</h2>
       <p>I’m also using SO-101 arms and LeRobot for the Robot Arm AI Challenge at the IEEE Global Robotics Championship, where I’m representing IEEE UK &amp; Ireland in a two-person team. The gripper and teleoperation tests on this page, including handling dodecahedron and hexagonal-prism pieces, feed directly into that competition build.</p>
+    </section>
+
+    <section id="videos" data-media-slot="videos">
+      <h2>Video demonstrations</h2>
+      <div class="video-gallery">
+        <figure>
+          <video controls playsinline preload="metadata" poster="../assets/images/so101-assistive-arm/web/policy-pouring-rice-poster.webp"><source src="../assets/images/so101-assistive-arm/web/policy-pouring-rice.mp4" type="video/mp4">Your browser does not support embedded video. <a href="../assets/images/so101-assistive-arm/web/policy-pouring-rice.mp4">Open the video directly</a>.</video>
+          <figcaption>Our first trained LeRobot policy pouring rice from a cup into a bowl, running live on the SO-101 arms.</figcaption>
+          <a class="video-fallback" href="../assets/images/so101-assistive-arm/web/policy-pouring-rice.mp4" target="_blank">Open video directly ↗</a>
+        </figure>
+        <figure>
+          <video controls playsinline preload="metadata" poster="../assets/images/so101-assistive-arm/web/cube-sorting-task-poster.webp"><source src="../assets/images/so101-assistive-arm/web/cube-sorting-task.mp4" type="video/mp4">Your browser does not support embedded video. <a href="../assets/images/so101-assistive-arm/web/cube-sorting-task.mp4">Open the video directly</a>.</video>
+          <figcaption>The cube-sorting task the next policy is being trained on: coloured blocks into matching bins.</figcaption>
+          <a class="video-fallback" href="../assets/images/so101-assistive-arm/web/cube-sorting-task.mp4" target="_blank">Open video directly ↗</a>
+        </figure>
+      </div>
     </section>
 
     <section id="photos" data-media-slot="photos">
@@ -98,12 +117,16 @@
         <figure><a href="../assets/images/so101-assistive-arm/web/gripper-test-dodecahedron.webp"><img src="../assets/images/so101-assistive-arm/web/gripper-test-dodecahedron.webp" alt="SO-101 arm gripping a grey cylinder next to a dodecahedron" loading="lazy"></a><figcaption>Testing how well PLA+ printed grippers handle round objects.</figcaption></figure>
         <figure><a href="../assets/images/so101-assistive-arm/web/teleoperation-test.webp"><img src="../assets/images/so101-assistive-arm/web/teleoperation-test.webp" alt="A team member holding a leader arm while the follower arm reaches over grey test pieces" loading="lazy"></a><figcaption>Teleoperating the SO-101 to test movement and gripper strength on the new platform.</figcaption></figure>
         <figure><a href="../assets/images/so101-assistive-arm/web/mens-shed-polytunnel-visit.webp"><img src="../assets/images/so101-assistive-arm/web/mens-shed-polytunnel-visit.webp" alt="Two students looking around a polytunnel with grape vines and vegetable beds" loading="lazy"></a><figcaption>Touring the polytunnel during our visit to Naas Men’s Shed.</figcaption></figure>
+        <figure><a href="../assets/images/so101-assistive-arm/web/demo-coverage-heatmap.webp"><img src="../assets/images/so101-assistive-arm/web/demo-coverage-heatmap.webp" alt="Top-camera view of the sorting table with a heatmap of where blocks appeared across 43 demonstrations" loading="lazy"></a><figcaption>Where blocks appeared across 43 sorting demonstrations, seen from the top camera.</figcaption></figure>
+        <figure><a href="../assets/images/so101-assistive-arm/web/grab-release-map.webp"><img src="../assets/images/so101-assistive-arm/web/grab-release-map.webp" alt="Two scatter plots of grab and release points for the left and right arms, with red circles marking gaps" loading="lazy"></a><figcaption>Every grab and release for each arm, with the largest unvisited gaps circled.</figcaption></figure>
+        <figure><a href="../assets/images/so101-assistive-arm/web/coverage-grid-43-demos.webp"><img src="../assets/images/so101-assistive-arm/web/coverage-grid-43-demos.webp" alt="Grid over the table showing the percentage of 43 demonstrations with a block in each cell" loading="lazy"></a><figcaption>Coverage grid after 43 demonstrations: red cells never held a block.</figcaption></figure>
+        <figure><a href="../assets/images/so101-assistive-arm/web/coverage-grid-65-demos.webp"><img src="../assets/images/so101-assistive-arm/web/coverage-grid-65-demos.webp" alt="The same coverage grid after 65 demonstrations" loading="lazy"></a><figcaption>The same grid after 65 demonstrations, used to plan the next recordings.</figcaption></figure>
       </div>
     </section>
 
     <section id="tools">
       <h2>Technologies &amp; tools</h2>
-      <div class="case-meta"><span>SO-101 Arms</span><span>LeRobot</span><span>Imitation Learning</span><span>ACT</span><span>SmolVLA</span><span>Python</span><span>Teleoperation</span><span>3D Printing (PLA+)</span><span>User-Centred Design</span></div>
+      <div class="case-meta"><span>SO-101 Arms</span><span>LeRobot</span><span>Imitation Learning</span><span>ACT</span><span>SmolVLA</span><span>Python</span><span>Teleoperation</span><span>3D Printing (PLA+)</span><span>Dataset Coverage Analysis</span><span>User-Centred Design</span></div>
     </section>
 
     <div class="project-pagination"><a class="back-link" href="mobile-manipulator.html">Autonomous Household Sorting Robot →</a></div>
