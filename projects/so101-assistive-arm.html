@@ -33,7 +33,7 @@
     <a class="back-link" href="../index.html#projects">← Back to project timeline</a>
     <p class="project-category" style="margin-top:32px">Robot Learning · Assistive Technology</p>
     <h1>Low-Cost Assistive Robotic Arms (SO-101)</h1>
-    <p class="case-summary">A two-arm robot built from open-source SO-101 arms that learns everyday tasks from demonstration instead of being programmed for each one. The same SO-101 and LeRobot platform underpins my build for the IEEE Global Robotics Championship.</p>
+    <p class="case-summary">A two-arm robot built from open-source SO-101 arms that learns everyday tasks from demonstration instead of being programmed for each one. Our first imitation-learning policy pours rice live on the arms, and measuring what our demonstrations cover showed us where the data runs out.</p>
 
     <figure class="case-hero-media">
       <img src="../assets/images/so101-assistive-arm/web/training-platform-layout.webp" alt="Two black SO-101 robotic arms mounted at either end of a wooden training board" width="1600" height="1200">
@@ -53,14 +53,52 @@
     </div>
 
     <div class="case-nav" aria-label="On this page">
+      <a href="#videos">Results</a>
+      <a href="#coverage">Data coverage</a>
+      <a href="#next">What's next</a>
       <a href="#overview">Overview</a>
       <a href="#community">Community input</a>
       <a href="#process">Development process</a>
-      <a href="#competition">Competition build</a>
-      <a href="#videos">Videos</a>
+      <a href="#competition">Competitions</a>
       <a href="#photos">Photos</a>
       <a href="#tools">Technologies</a>
     </div>
+
+    <section id="videos" data-media-slot="videos">
+      <h2>Results so far</h2>
+      <div class="video-gallery">
+        <figure>
+          <video controls playsinline preload="metadata" poster="../assets/images/so101-assistive-arm/web/policy-pouring-rice-poster.webp"><source src="../assets/images/so101-assistive-arm/web/policy-pouring-rice.mp4" type="video/mp4">Your browser does not support embedded video. <a href="../assets/images/so101-assistive-arm/web/policy-pouring-rice.mp4">Open the video directly</a>.</video>
+          <figcaption>Our first trained LeRobot policy pouring rice from a cup into a bowl, running live on the SO-101 arms.</figcaption>
+          <a class="video-fallback" href="../assets/images/so101-assistive-arm/web/policy-pouring-rice.mp4" target="_blank">Open video directly ↗</a>
+        </figure>
+        <figure>
+          <video controls playsinline preload="metadata" poster="../assets/images/so101-assistive-arm/web/cube-sorting-task-poster.webp"><source src="../assets/images/so101-assistive-arm/web/cube-sorting-task.mp4" type="video/mp4">Your browser does not support embedded video. <a href="../assets/images/so101-assistive-arm/web/cube-sorting-task.mp4">Open the video directly</a>.</video>
+          <figcaption>The cube-sorting task the next policy is being trained on: coloured blocks into matching bins.</figcaption>
+          <a class="video-fallback" href="../assets/images/so101-assistive-arm/web/cube-sorting-task.mp4" target="_blank">Open video directly ↗</a>
+        </figure>
+      </div>
+    </section>
+
+    <section id="coverage">
+      <h2>Measuring what the demonstrations cover</h2>
+      <p>Imitation learning only knows the situations it has been shown. Before training the cube-sorting policy, I wrote scripts that read every recorded episode and map where blocks sat and where each arm grabbed and released. After 43 demonstrations the maps showed whole areas of the table that no demonstration had used, and empty patches inside each arm’s reach. We placed blocks in those areas in the next sessions and grew the dataset to 65 demonstrations.</p>
+      <div class="case-gallery">
+        <figure><a href="../assets/images/so101-assistive-arm/web/demo-coverage-heatmap.webp"><img src="../assets/images/so101-assistive-arm/web/demo-coverage-heatmap.webp" alt="Top-camera view of the sorting table with a heatmap of where blocks appeared across 43 demonstrations" loading="lazy"></a><figcaption>Where blocks appeared across 43 sorting demonstrations, seen from the top camera.</figcaption></figure>
+        <figure><a href="../assets/images/so101-assistive-arm/web/grab-release-map.webp"><img src="../assets/images/so101-assistive-arm/web/grab-release-map.webp" alt="Two scatter plots of grab and release points for the left and right arms, with red circles marking gaps" loading="lazy"></a><figcaption>Every grab and release for each arm, with the largest unvisited gaps circled.</figcaption></figure>
+        <figure><a href="../assets/images/so101-assistive-arm/web/coverage-grid-43-demos.webp"><img src="../assets/images/so101-assistive-arm/web/coverage-grid-43-demos.webp" alt="Grid over the table showing the percentage of 43 demonstrations with a block in each cell" loading="lazy"></a><figcaption>Coverage grid after 43 demonstrations: red cells never held a block.</figcaption></figure>
+        <figure><a href="../assets/images/so101-assistive-arm/web/coverage-grid-65-demos.webp"><img src="../assets/images/so101-assistive-arm/web/coverage-grid-65-demos.webp" alt="The same coverage grid after 65 demonstrations" loading="lazy"></a><figcaption>The same grid after 65 demonstrations, used to plan the next recordings.</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="next">
+      <h2>Where it falls short, and what’s next</h2>
+      <ul>
+        <li><strong>Every gap costs teleoperation.</strong> Filling the coverage holes meant recording more demonstrations by hand, and the demonstrations rarely show how to recover from a missed grasp.</li>
+        <li><strong>Score failures by position.</strong> Next I want to test the sorting policy across the coverage grid, so each failure can be traced to the part of the workspace the data missed.</li>
+        <li><strong>Generate the missing experience.</strong> I want to try reinforcement learning in simulation to create extra episodes, including recovery from failed grasps, and measure whether adding them improves the policy on the real arms.</li>
+      </ul>
+    </section>
 
     <section id="overview">
       <h2>Why low-cost assistive arms</h2>
@@ -84,31 +122,16 @@
       <article class="process-step"><span class="step-number" aria-hidden="true">01</span><div><h3>Training platform</h3><p>We designed and built a wooden training board with the follower arms bolted down, so the setup stays rigid and repeatable between data-collection sessions and there is no re-calibration every time the arms are moved.</p></div></article>
       <article class="process-step"><span class="step-number" aria-hidden="true">02</span><div><h3>Teleoperation and gripper testing</h3><p>With the platform built, we teleoperated the follower arms from the leader arms to check range of movement and gripper strength, including picking up round objects with PLA+ printed grippers.</p></div></article>
       <article class="process-step"><span class="step-number" aria-hidden="true">03</span><div><h3>Imitation learning</h3><p>The first model is trained in LeRobot from human demonstrations recorded on the leader arms, with simulation data as a second source. Published work on low-cost bimanual arms using Action Chunking with Transformers (ACT), and compact vision-language-action models such as SmolVLA tested on SO-101 tasks, guides our choice of policies. Our first trained policy now pours rice from a cup into a bowl, running live on the arms.</p></div></article>
-      <article class="process-step"><span class="step-number" aria-hidden="true">04</span><div><h3>Checking what the data covers</h3><p>For the next task, sorting coloured cubes into matching bins, I wrote analysis scripts that read every recorded episode and map where blocks were placed and where each arm grabbed and let go. Heatmaps from the top camera and a grid scoring how often each spot held a block showed clear gaps: whole areas of the table no demonstration had ever used, and empty patches inside each arm’s reach. We used those maps to decide where to put blocks in the next recording sessions, growing the dataset from 43 to 65 demonstrations so the policy sees the whole workspace rather than a few familiar positions.</p></div></article>
+      <article class="process-step"><span class="step-number" aria-hidden="true">04</span><div><h3>Checking what the data covers</h3><p>Before training the cube-sorting policy, I mapped where every recorded demonstration placed blocks and where each arm grabbed and released, then used the gaps to plan the next recording sessions (<a href="#coverage">see the coverage maps</a>).</p></div></article>
       <article class="process-step"><span class="step-number" aria-hidden="true">05</span><div><h3>Test, gather feedback, retrain</h3><p>Pouring is tested with rice standing in for liquid and compared against human pours by counting spills; pick-and-place is scored on whether each object ends up in the right place. Feedback from the Men’s Shed and our facilitator feeds a second, improved model, which we compare against the first.</p></div></article>
       <article class="process-step"><span class="step-number" aria-hidden="true">06</span><div><h3>Safety and sustainability</h3><p>A signed risk assessment covers the workshop and moving arms; training uses cold water instead of tea, with electronics kept well clear of liquids. The project is mapped to UN Sustainable Development Goals 11, 12 and 16 through accessible, low-cost, open-source assistive technology.</p></div></article>
     </section>
 
     <section id="competition">
-      <h2>Competition build</h2>
-      <p>I’m also using SO-101 arms and LeRobot for the Robot Arm AI Challenge at the IEEE Global Robotics Championship, where I’m representing IEEE UK &amp; Ireland in a two-person team. The gripper and teleoperation tests on this page, including handling dodecahedron and hexagonal-prism pieces, feed directly into that competition build.</p>
+      <h2>Competitions</h2>
+      <p>I’m using the same SO-101 and LeRobot platform for the Robot Arm AI Challenge at the IEEE Global Robotics Championship in Malta (28–29 November 2026), where I’m representing IEEE UK &amp; Ireland in a two-person team. The gripper and teleoperation tests on this page, including handling dodecahedron and hexagonal-prism pieces, feed directly into that build. In December I’m competing in the Intel Physical AI Challenge in Zurich, and in September I built a rover-mounted sorting arm at the Alien Bazaar hackathon in Warsaw (<a href="mobile-manipulator.html">see that project</a>).</p>
     </section>
 
-    <section id="videos" data-media-slot="videos">
-      <h2>Video demonstrations</h2>
-      <div class="video-gallery">
-        <figure>
-          <video controls playsinline preload="metadata" poster="../assets/images/so101-assistive-arm/web/policy-pouring-rice-poster.webp"><source src="../assets/images/so101-assistive-arm/web/policy-pouring-rice.mp4" type="video/mp4">Your browser does not support embedded video. <a href="../assets/images/so101-assistive-arm/web/policy-pouring-rice.mp4">Open the video directly</a>.</video>
-          <figcaption>Our first trained LeRobot policy pouring rice from a cup into a bowl, running live on the SO-101 arms.</figcaption>
-          <a class="video-fallback" href="../assets/images/so101-assistive-arm/web/policy-pouring-rice.mp4" target="_blank">Open video directly ↗</a>
-        </figure>
-        <figure>
-          <video controls playsinline preload="metadata" poster="../assets/images/so101-assistive-arm/web/cube-sorting-task-poster.webp"><source src="../assets/images/so101-assistive-arm/web/cube-sorting-task.mp4" type="video/mp4">Your browser does not support embedded video. <a href="../assets/images/so101-assistive-arm/web/cube-sorting-task.mp4">Open the video directly</a>.</video>
-          <figcaption>The cube-sorting task the next policy is being trained on: coloured blocks into matching bins.</figcaption>
-          <a class="video-fallback" href="../assets/images/so101-assistive-arm/web/cube-sorting-task.mp4" target="_blank">Open video directly ↗</a>
-        </figure>
-      </div>
-    </section>
 
     <section id="photos" data-media-slot="photos">
       <h2>Photos</h2>
@@ -117,10 +140,6 @@
         <figure><a href="../assets/images/so101-assistive-arm/web/gripper-test-dodecahedron.webp"><img src="../assets/images/so101-assistive-arm/web/gripper-test-dodecahedron.webp" alt="SO-101 arm gripping a grey cylinder next to a dodecahedron" loading="lazy"></a><figcaption>Testing how well PLA+ printed grippers handle round objects.</figcaption></figure>
         <figure><a href="../assets/images/so101-assistive-arm/web/teleoperation-test.webp"><img src="../assets/images/so101-assistive-arm/web/teleoperation-test.webp" alt="A team member holding a leader arm while the follower arm reaches over grey test pieces" loading="lazy"></a><figcaption>Teleoperating the SO-101 to test movement and gripper strength on the new platform.</figcaption></figure>
         <figure><a href="../assets/images/so101-assistive-arm/web/mens-shed-polytunnel-visit.webp"><img src="../assets/images/so101-assistive-arm/web/mens-shed-polytunnel-visit.webp" alt="Two students looking around a polytunnel with grape vines and vegetable beds" loading="lazy"></a><figcaption>Touring the polytunnel during our visit to Naas Men’s Shed.</figcaption></figure>
-        <figure><a href="../assets/images/so101-assistive-arm/web/demo-coverage-heatmap.webp"><img src="../assets/images/so101-assistive-arm/web/demo-coverage-heatmap.webp" alt="Top-camera view of the sorting table with a heatmap of where blocks appeared across 43 demonstrations" loading="lazy"></a><figcaption>Where blocks appeared across 43 sorting demonstrations, seen from the top camera.</figcaption></figure>
-        <figure><a href="../assets/images/so101-assistive-arm/web/grab-release-map.webp"><img src="../assets/images/so101-assistive-arm/web/grab-release-map.webp" alt="Two scatter plots of grab and release points for the left and right arms, with red circles marking gaps" loading="lazy"></a><figcaption>Every grab and release for each arm, with the largest unvisited gaps circled.</figcaption></figure>
-        <figure><a href="../assets/images/so101-assistive-arm/web/coverage-grid-43-demos.webp"><img src="../assets/images/so101-assistive-arm/web/coverage-grid-43-demos.webp" alt="Grid over the table showing the percentage of 43 demonstrations with a block in each cell" loading="lazy"></a><figcaption>Coverage grid after 43 demonstrations: red cells never held a block.</figcaption></figure>
-        <figure><a href="../assets/images/so101-assistive-arm/web/coverage-grid-65-demos.webp"><img src="../assets/images/so101-assistive-arm/web/coverage-grid-65-demos.webp" alt="The same coverage grid after 65 demonstrations" loading="lazy"></a><figcaption>The same grid after 65 demonstrations, used to plan the next recordings.</figcaption></figure>
       </div>
     </section>
 
